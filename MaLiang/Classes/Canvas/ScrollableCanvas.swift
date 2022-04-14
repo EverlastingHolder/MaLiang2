@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class ScrollableCanvas: Canvas {
+open class ScrollableCanvas: MLCanvas {
     
     open override func setup() {
         super.setup()

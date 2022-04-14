@@ -17,7 +17,7 @@ open class DataImporter {
     ///   - directory: directory for saved data contents
     ///   - canvas: canvas to draw data on
     /// - Attention: make sure that all brushes needed are finished seting up before reloading data
-    public static func importData(from directory: URL, to canvas: Canvas, progress: ProgressHandler? = nil, result: ResultHandler? = nil) {
+    public static func importData(from directory: URL, to canvas: MLCanvas, progress: ProgressHandler? = nil, result: ResultHandler? = nil) {
         DispatchQueue(label: "com.maliang.importing").async {
             do {
                 try self.importDataSynchronously(from: directory, to: canvas, progress: progress)
@@ -32,7 +32,7 @@ open class DataImporter {
         }
     }
     
-    public static func importDataSynchronously(from directory: URL, to canvas: Canvas, progress: ProgressHandler? = nil) throws {
+    public static func importDataSynchronously(from directory: URL, to canvas: MLCanvas, progress: ProgressHandler? = nil) throws {
         
         let decoder = JSONDecoder()
         

@@ -44,7 +44,7 @@ open class Brush {
     open private(set) var textureID: String?
     
     /// target to draw
-    open weak var target: Canvas?
+    open weak var target: MLCanvas?
 
     // opacity of texture, affects the darkness of stroke
     open var opacity: CGFloat = 0.3 {
@@ -101,7 +101,7 @@ open class Brush {
     
     // designed initializer, will be called by target when reigster called
     // identifier is not necessary if you won't save the content of your canvas to file
-    required public init(name: String?, textureID: String?, target: Canvas) {
+    required public init(name: String?, textureID: String?, target: MLCanvas) {
         self.name = name ?? UUID().uuidString
         self.target = target
         self.textureID = textureID
@@ -255,7 +255,7 @@ open class Brush {
     // MARK: - Drawing Actions
     private var lastRenderedPan: Pan?
     
-    private func pushPoint(_ point: CGPoint, to bezier: BezierGenerator, force: CGFloat, isEnd: Bool = false, on canvas: Canvas) {
+    private func pushPoint(_ point: CGPoint, to bezier: BezierGenerator, force: CGFloat, isEnd: Bool = false, on canvas: MLCanvas) {
         var lines: [MLLine] = []
         let vertices = bezier.pushPoint(point)
         guard vertices.count >= 2 else {
@@ -283,14 +283,14 @@ open class Brush {
         render(lines: lines, on: canvas)
     }
     
-    open func render(lines: [MLLine], on canvas: Canvas) {
+    open func render(lines: [MLLine], on canvas: MLCanvas) {
         canvas.render(lines: lines)
     }
 
     // MARK: - Touches
 
     // called when touches began event triggered on canvas
-    open func renderBegan(from pan: Pan, on canvas: Canvas) -> Bool {
+    open func renderBegan(from pan: Pan, on canvas: MLCanvas) -> Bool {
         lastRenderedPan = pan
         bezierGenerator.begin(with: pan.point)
         pushPoint(pan.point, to: bezierGenerator, force: pan.force, on: canvas)
@@ -298,7 +298,7 @@ open class Brush {
     }
     
     // called when touches moved event triggered on canvas
-    open func renderMoved(to pan: Pan, on canvas: Canvas) -> Bool {
+    open func renderMoved(to pan: Pan, on canvas: MLCanvas) -> Bool {
         guard bezierGenerator.points.count > 0 else { return false }
         guard pan.point != lastRenderedPan?.point else {
             return false
@@ -308,7 +308,7 @@ open class Brush {
     }
     
     // called when touches ended event triggered on canvas
-    open func renderEnded(at pan: Pan, on canvas: Canvas) {
+    open func renderEnded(at pan: Pan, on canvas: MLCanvas) {
         defer {
             bezierGenerator.finish()
             lastRenderedPan = nil

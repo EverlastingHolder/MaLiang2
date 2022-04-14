@@ -11,10 +11,10 @@ import UIKit
 /// Snapshoting Target, used for snapshot
 open class SnapshotTarget: RenderTarget {
     
-    private weak var canvas: Canvas?
+    private weak var canvas: MLCanvas?
 
     /// create target specified with a canvas
-    public init(canvas: Canvas) {
+    public init(canvas: MLCanvas) {
         self.canvas = canvas
         var size = canvas.bounds.size
         if let scrollable = canvas as? ScrollableCanvas {

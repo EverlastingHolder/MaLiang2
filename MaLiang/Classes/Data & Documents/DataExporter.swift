@@ -14,7 +14,7 @@ open class DataExporter {
     // MARK: - Saving
     
     /// create documents from specified canvas
-    public init(canvas: Canvas) {
+    public init(canvas: MLCanvas) {
         let data = canvas.data
         content = CanvasContent(size: canvas.size,
                                 lineStrips: data?.elements.compactMap { $0 as? LineStrip } ?? [],

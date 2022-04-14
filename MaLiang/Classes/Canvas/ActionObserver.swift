@@ -10,22 +10,22 @@ import UIKit
 
 /// Delegate for rendering
 public protocol RenderingDelegate: AnyObject {
-    func canvas(_ canvas: Canvas, shouldRenderTapAt point: CGPoint) -> Bool
-    func canvas(_ canvas: Canvas, shouldRenderChartlet chartlet: Chartlet) -> Bool
+    func canvas(_ canvas: MLCanvas, shouldRenderTapAt point: CGPoint) -> Bool
+    func canvas(_ canvas: MLCanvas, shouldRenderChartlet chartlet: Chartlet) -> Bool
     // if returns false, the whole line strip will be skiped
-    func canvas(_ canvas: Canvas, shouldBeginLineAt point: CGPoint, force: CGFloat) -> Bool
+    func canvas(_ canvas: MLCanvas, shouldBeginLineAt point: CGPoint, force: CGFloat) -> Bool
 }
 
 public extension RenderingDelegate {
-    func canvas(_ canvas: Canvas, shouldRenderTapAt point: CGPoint) -> Bool {
+    func canvas(_ canvas: MLCanvas, shouldRenderTapAt point: CGPoint) -> Bool {
         return true
     }
     
-    func canvas(_ canvas: Canvas, shouldRenderChartlet chartlet: Chartlet) -> Bool {
+    func canvas(_ canvas: MLCanvas, shouldRenderChartlet chartlet: Chartlet) -> Bool {
         return true
     }
     
-    func canvas(_ canvas: Canvas, shouldBeginLineAt point: CGPoint, force: CGFloat) -> Bool {
+    func canvas(_ canvas: MLCanvas, shouldBeginLineAt point: CGPoint, force: CGFloat) -> Bool {
         return true
     }
 }
@@ -33,14 +33,14 @@ public extension RenderingDelegate {
 /// Observer for canvas actions
 public protocol ActionObserver: AnyObject {
     
-    func canvas(_ canvas: Canvas, didRenderTapAt point: CGPoint)
-    func canvas(_ canvas: Canvas, didRenderChartlet chartlet: Chartlet)
+    func canvas(_ canvas: MLCanvas, didRenderTapAt point: CGPoint)
+    func canvas(_ canvas: MLCanvas, didRenderChartlet chartlet: Chartlet)
 
-    func canvas(_ canvas: Canvas, didBeginLineAt point: CGPoint, force: CGFloat)
-    func canvas(_ canvas: Canvas, didMoveLineTo point: CGPoint, force: CGFloat)
-    func canvas(_ canvas: Canvas, didFinishLineAt point: CGPoint, force: CGFloat)
+    func canvas(_ canvas: MLCanvas, didBeginLineAt point: CGPoint, force: CGFloat)
+    func canvas(_ canvas: MLCanvas, didMoveLineTo point: CGPoint, force: CGFloat)
+    func canvas(_ canvas: MLCanvas, didFinishLineAt point: CGPoint, force: CGFloat)
     
-    func canvas(_ canvas: Canvas, didRedrawOn target: RenderTarget)
+    func canvas(_ canvas: MLCanvas, didRedrawOn target: RenderTarget)
     
     // Only called on ScrollableCanvas
     
@@ -51,14 +51,14 @@ public protocol ActionObserver: AnyObject {
 /// Observer for canvas actions
 public extension ActionObserver {
     
-    func canvas(_ canvas: Canvas, didRenderTapAt point: CGPoint) {}
-    func canvas(_ canvas: Canvas, didRenderChartlet chartlet: Chartlet) {}
+    func canvas(_ canvas: MLCanvas, didRenderTapAt point: CGPoint) {}
+    func canvas(_ canvas: MLCanvas, didRenderChartlet chartlet: Chartlet) {}
     
-    func canvas(_ canvas: Canvas, didBeginLineAt point: CGPoint, force: CGFloat) {}
-    func canvas(_ canvas: Canvas, didMoveLineTo point: CGPoint, force: CGFloat) {}
-    func canvas(_ canvas: Canvas, didFinishLineAt point: CGPoint, force: CGFloat) {}
+    func canvas(_ canvas: MLCanvas, didBeginLineAt point: CGPoint, force: CGFloat) {}
+    func canvas(_ canvas: MLCanvas, didMoveLineTo point: CGPoint, force: CGFloat) {}
+    func canvas(_ canvas: MLCanvas, didFinishLineAt point: CGPoint, force: CGFloat) {}
     
-    func canvas(_ canvas: Canvas, didRedrawOn target: RenderTarget) {}
+    func canvas(_ canvas: MLCanvas, didRedrawOn target: RenderTarget) {}
     
     // Only called on ScrollableCanvas
     
@@ -80,26 +80,26 @@ final class ActionObserverPool: WeakObjectsPool {
 
 extension ActionObserverPool: ActionObserver {
     
-    func canvas(_ canvas: Canvas, didRenderTapAt point: CGPoint) {
+    func canvas(_ canvas: MLCanvas, didRenderTapAt point: CGPoint) {
         aliveObservers.forEach { $0.canvas(canvas, didRenderTapAt: point) }
     }
-    func canvas(_ canvas: Canvas, didRenderChartlet chartlet: Chartlet) {
+    func canvas(_ canvas: MLCanvas, didRenderChartlet chartlet: Chartlet) {
         aliveObservers.forEach { $0.canvas(canvas, didRenderChartlet: chartlet) }
     }
     
-    func canvas(_ canvas: Canvas, didBeginLineAt point: CGPoint, force: CGFloat) {
+    func canvas(_ canvas: MLCanvas, didBeginLineAt point: CGPoint, force: CGFloat) {
         aliveObservers.forEach { $0.canvas(canvas, didBeginLineAt: point, force: force) }
     }
     
-    func canvas(_ canvas: Canvas, didMoveLineTo point: CGPoint, force: CGFloat) {
+    func canvas(_ canvas: MLCanvas, didMoveLineTo point: CGPoint, force: CGFloat) {
         aliveObservers.forEach { $0.canvas(canvas, didMoveLineTo: point, force: force) }
     }
     
-    func canvas(_ canvas: Canvas, didFinishLineAt point: CGPoint, force: CGFloat) {
+    func canvas(_ canvas: MLCanvas, didFinishLineAt point: CGPoint, force: CGFloat) {
         aliveObservers.forEach { $0.canvas(canvas, didFinishLineAt: point, force: force) }
     }
 
-    func canvas(_ canvas: Canvas, didRedrawOn target: RenderTarget) {
+    func canvas(_ canvas: MLCanvas, didRedrawOn target: RenderTarget) {
         aliveObservers.forEach { $0.canvas(canvas, didRedrawOn: target) }
     }
     

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kdy-L1-4Gm">
-    <device id="ipad11_0rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kdy-L1-4Gm">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -28,17 +26,17 @@
             <objects>
                 <tableViewController id="qk8-Ea-M28" customClass="RootViewController" customModule="MaLiang_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="K6L-gb-p9b">
-                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
                             <tableViewSection id="7sN-Vs-VBT">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="024-RR-suc" detailTextLabel="J25-QJ-lba" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="FTj-gl-6pp">
-                                        <rect key="frame" x="0.0" y="28" width="1194" height="60"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FTj-gl-6pp" id="7TW-uQ-e89">
-                                            <rect key="frame" x="0.0" y="0.0" width="1163" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="571.5" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Single View" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="024-RR-suc">
@@ -62,10 +60,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="QIp-3L-1rY" detailTextLabel="lXm-De-3h8" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="mAF-7q-XCa">
-                                        <rect key="frame" x="0.0" y="88" width="1194" height="60"/>
+                                        <rect key="frame" x="0.0" y="104.5" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mAF-7q-XCa" id="W07-Oo-yUH">
-                                            <rect key="frame" x="0.0" y="0.0" width="1163" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="571.5" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Scale &amp; Scroll" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QIp-3L-1rY">
@@ -89,10 +87,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="jhl-Ie-yEX" detailTextLabel="nwY-3W-zBX" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="ee4-KU-blQ">
-                                        <rect key="frame" x="0.0" y="148" width="1194" height="60"/>
+                                        <rect key="frame" x="0.0" y="164.5" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ee4-KU-blQ" id="Z1N-d3-M95">
-                                            <rect key="frame" x="0.0" y="0.0" width="1163" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="571.5" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="ScrollView" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jhl-Ie-yEX">
@@ -118,10 +116,10 @@ may have performance issue on old devices</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="AyR-DD-kEG" detailTextLabel="d8C-cw-CmX" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="VSO-7t-rDH">
-                                        <rect key="frame" x="0.0" y="208" width="1194" height="60"/>
+                                        <rect key="frame" x="0.0" y="224.5" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VSO-7t-rDH" id="Hh1-Jo-zXe">
-                                            <rect key="frame" x="0.0" y="0.0" width="1163" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="571.5" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Image Elements" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AyR-DD-kEG">
@@ -145,10 +143,10 @@ may have performance issue on old devices</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="7VH-wD-rmz" detailTextLabel="38u-w8-jHO" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="JSb-lO-wrc">
-                                        <rect key="frame" x="0.0" y="268" width="1194" height="60"/>
+                                        <rect key="frame" x="0.0" y="284.5" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JSb-lO-wrc" id="IU4-e4-jdD">
-                                            <rect key="frame" x="0.0" y="0.0" width="1163" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="571.5" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Data Loading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7VH-wD-rmz">
@@ -194,13 +192,13 @@ may have performance issue on old devices</string>
                         <viewControllerLayoutGuide type="bottom" id="osM-ui-Ibo"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mcJ-RZ-dVd">
-                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="5" translatesAutoresizingMaskIntoConstraints="NO" id="Inh-fV-Hq4">
-                                <rect key="frame" x="0.0" y="50" width="1194" height="784"/>
+                                <rect key="frame" x="0.0" y="50" width="600" height="550"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aQz-kA-LLl" customClass="Canvas" customModule="MaLiang">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aQz-kA-LLl" customClass="MLCanvas" customModule="MaLiang">
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1024"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -243,30 +241,30 @@ may have performance issue on old devices</string>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="ZIH-iH-bgj">
-                                <rect key="frame" x="0.0" y="50" width="1194" height="764"/>
+                                <rect key="frame" x="0.0" y="50" width="600" height="550"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JK1-D2-5F7" customClass="Canvas" customModule="MaLiang">
-                                <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JK1-D2-5F7" customClass="MLCanvas" customModule="MaLiang">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hES-Gz-WQy">
-                                <rect key="frame" x="1120" y="634" width="51" height="31"/>
+                                <rect key="frame" x="526" y="420" width="51" height="31"/>
                                 <connections>
                                     <action selector="togglePencilMode:" destination="vXZ-lx-hvc" eventType="valueChanged" id="SNf-uw-eYp"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pencil Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ud-p6-xdR">
-                                <rect key="frame" x="1005.5" y="639.5" width="93.5" height="20.5"/>
+                                <rect key="frame" x="411.5" y="425.5" width="93.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GFV-Mf-5bf">
-                                <rect key="frame" x="943" y="65" width="236" height="136"/>
+                                <rect key="frame" x="349" y="65" width="236" height="136"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Rz-xR-sMg">
                                         <rect key="frame" x="8" y="8" width="20" height="120"/>
@@ -422,7 +420,7 @@ may have performance issue on old devices</string>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="AID-gC-Kue">
-                                <rect key="frame" x="16" y="718" width="1162" height="32"/>
+                                <rect key="frame" x="16" y="504" width="568" height="32"/>
                                 <segments>
                                     <segment title="pen"/>
                                     <segment title="pencil"/>
@@ -434,7 +432,7 @@ may have performance issue on old devices</string>
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X7T-Is-9js">
-                                <rect key="frame" x="1119" y="680" width="50" height="30"/>
+                                <rect key="frame" x="525" y="466" width="50" height="30"/>
                                 <color key="backgroundColor" red="0.0077354029609999998" green="0.51773045490000003" blue="0.81304125920000003" alpha="0.79831414473684215" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="7aH-KV-Xcl"/>
@@ -454,7 +452,7 @@ may have performance issue on old devices</string>
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMu-Jd-al0">
-                                <rect key="frame" x="999" y="680" width="100" height="30"/>
+                                <rect key="frame" x="405" y="466" width="100" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="mJl-Xa-AYY"/>
@@ -472,19 +470,19 @@ may have performance issue on old devices</string>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IoO-2f-vXQ">
-                                <rect key="frame" x="1166.5" y="769" width="7.5" height="20.5"/>
+                                <rect key="frame" x="572.5" y="555" width="7.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="y2M-JQ-hAq">
-                                <rect key="frame" x="18" y="764" width="1142.5" height="31"/>
+                                <rect key="frame" x="18" y="550" width="548.5" height="31"/>
                                 <connections>
                                     <action selector="changeSizeAction:" destination="vXZ-lx-hvc" eventType="valueChanged" id="1eg-Zu-CyY"/>
                                 </connections>
                             </slider>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arX-yu-Unn">
-                                <rect key="frame" x="20" y="676" width="50" height="30"/>
+                                <rect key="frame" x="20" y="462" width="50" height="30"/>
                                 <color key="backgroundColor" red="0.0077354029609999998" green="0.51773045490000003" blue="0.81304125920000003" alpha="0.79831414469999995" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="r3s-vI-uH8"/>
@@ -506,7 +504,7 @@ may have performance issue on old devices</string>
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9t-VJ-CAY">
-                                <rect key="frame" x="78" y="676" width="50" height="30"/>
+                                <rect key="frame" x="78" y="462" width="50" height="30"/>
                                 <color key="backgroundColor" red="0.0077354029609999998" green="0.51773045490000003" blue="0.81304125920000003" alpha="0.79831414469999995" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="Zds-Av-og1"/>
@@ -600,15 +598,15 @@ may have performance issue on old devices</string>
                         <viewControllerLayoutGuide type="bottom" id="BCG-y9-C6A"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Zb8-2J-P1C">
-                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9I-J6-IzH" customClass="Canvas" customModule="MaLiang">
-                                <rect key="frame" x="15" y="186" width="1164" height="613"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9I-J6-IzH" customClass="MLCanvas" customModule="MaLiang">
+                                <rect key="frame" x="15" y="186" width="570" height="399"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ogn-6x-A5V">
-                                <rect key="frame" x="15" y="140" width="1164" height="32"/>
+                                <rect key="frame" x="15" y="140" width="570" height="32"/>
                                 <segments>
                                     <segment title="Texture-1"/>
                                     <segment title="Texture-2"/>
@@ -616,16 +614,16 @@ may have performance issue on old devices</string>
                                 </segments>
                             </segmentedControl>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="l0V-3G-Sy3">
-                                <rect key="frame" x="16" y="65" width="1162" height="60"/>
+                                <rect key="frame" x="16" y="65" width="568" height="60"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chartlet-1" translatesAutoresizingMaskIntoConstraints="NO" id="vOG-Au-OzK">
-                                        <rect key="frame" x="0.0" y="0.0" width="387.5" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="189.5" height="60"/>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chartlet-2" translatesAutoresizingMaskIntoConstraints="NO" id="flA-RR-CeN">
-                                        <rect key="frame" x="387.5" y="0.0" width="387" height="60"/>
+                                        <rect key="frame" x="189.5" y="0.0" width="189" height="60"/>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chartlet-3" translatesAutoresizingMaskIntoConstraints="NO" id="vWm-tu-VK6">
-                                        <rect key="frame" x="774.5" y="0.0" width="387.5" height="60"/>
+                                        <rect key="frame" x="378.5" y="0.0" width="189.5" height="60"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -665,11 +663,11 @@ may have performance issue on old devices</string>
                         <viewControllerLayoutGuide type="bottom" id="DVd-yH-Jkd"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="tWd-HY-QHR">
-                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9ag-qD-mlj">
-                                <rect key="frame" x="0.0" y="50" width="1194" height="764"/>
+                                <rect key="frame" x="0.0" y="50" width="600" height="550"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                         </subviews>
@@ -706,11 +704,11 @@ may have performance issue on old devices</string>
                         <viewControllerLayoutGuide type="bottom" id="Qkn-qG-5cl"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="egp-KQ-7Do">
-                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="snQ-Ei-YrR" customClass="ScrollableCanvas" customModule="MaLiang">
-                                <rect key="frame" x="0.0" y="50" width="1194" height="764"/>
+                                <rect key="frame" x="0.0" y="50" width="600" height="550"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -746,22 +744,22 @@ may have performance issue on old devices</string>
                         <viewControllerLayoutGuide type="bottom" id="cJp-NJ-lbL"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="78f-rs-9p5">
-                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tEZ-Vs-ZzD">
-                                <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="FileListCell" textLabel="fyU-kg-Hv3" rowHeight="50" style="IBUITableViewCellStyleDefault" id="Swj-GV-4rj">
-                                        <rect key="frame" x="0.0" y="28" width="1194" height="50"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Swj-GV-4rj" id="E7X-tr-dyg">
-                                            <rect key="frame" x="0.0" y="0.0" width="1135" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="547" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fyU-kg-Hv3">
-                                                    <rect key="frame" x="16" y="0.0" width="1111" height="50"/>
+                                                    <rect key="frame" x="16" y="0.0" width="523" height="50"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>

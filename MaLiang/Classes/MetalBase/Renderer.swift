@@ -13,9 +13,9 @@ class Renderer: NSObject {
     var device: MTLDevice
     var commandQueue: MTLCommandQueue
     
-    weak var canvas: Canvas?
+    weak var canvas: MLCanvas?
     
-    init(delegateTo canvas: Canvas) throws {
+    init(delegateTo canvas: MLCanvas) throws {
         guard let device = sharedDevice,
               let queue = device.makeCommandQueue() else {
             throw MLError.initializationError

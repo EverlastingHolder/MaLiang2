@@ -37,7 +37,7 @@ open class ChartletBrush: Printer {
         name: String?,
         imageNames: [String],
         renderStyle: RenderStyle = .ordered,
-        target: Canvas
+        target: MLCanvas
     ) throws {
         let textureIDs = try imageNames.compactMap { name -> String in
             guard let image = UIImage(named: name) else {
@@ -59,7 +59,7 @@ open class ChartletBrush: Printer {
         self.renderStyle = renderStyle
     }
     
-    required public init(name: String?, textureID: String?, target: Canvas) {
+    required public init(name: String?, textureID: String?, target: MLCanvas) {
         super.init(name: name, textureID: textureID, target: target)
         opacity = 1
         target.register(brush: self)
@@ -87,7 +87,7 @@ open class ChartletBrush: Printer {
         }
     }
     
-    open override func render(lines: [MLLine], on canvas: Canvas) {
+    open override func render(lines: [MLLine], on canvas: MLCanvas) {
         
         lines.forEach { (line) in
             let count = max(line.length / line.pointStep, 1)

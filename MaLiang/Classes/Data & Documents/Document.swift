@@ -38,7 +38,7 @@ public struct DocumentInfo: Codable {
     /// initialize a document info with specified identifier, an uuid will be used if passed nil
     public init(identifier: String? = nil) {
         self.identifier = identifier ?? UUID().uuidString
-        library = try? Bundle(for: Canvas.classForCoder()).readInfo()
+        library = try? Bundle(for: MLCanvas.classForCoder()).readInfo()
         app = try? Bundle.main.readInfo()
         version = library?.version ?? "unknown"
     }

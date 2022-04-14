@@ -23,9 +23,9 @@ open class Chartlet: CanvasElement {
     public var angle: CGFloat?
     
     /// a weak refreance to canvas
-    public weak var canvas: Canvas?
+    public weak var canvas: MLCanvas?
     
-    init(center: CGPoint, size: CGSize, textureID: String, angle: CGFloat, canvas: Canvas) {
+    init(center: CGPoint, size: CGSize, textureID: String, angle: CGFloat, canvas: MLCanvas) {
         let offset = canvas.contentOffset
         let scale = canvas.scale
         self.canvas = canvas

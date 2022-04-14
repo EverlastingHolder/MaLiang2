@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class Canvas: MetalView {
+open class MLCanvas: MetalView {
     
     // MARK: - Brushes
     
