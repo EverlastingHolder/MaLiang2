@@ -191,6 +191,11 @@ open class MLCanvas: MetalView {
     open override func clear(display: Bool = true) {
         super.clear(display: display)
         
+        // clear lasso layers
+        layer.sublayers?
+            .filter { $0 is MLLassoLayer }
+            .forEach { $0.removeFromSuperlayer() }
+        
         if display {
             data.appendClearAction()
         }
