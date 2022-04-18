@@ -178,7 +178,12 @@ open class MLCanvas: MetalView {
     
     /// take a snapshot on current canvas and export an image
     open func snapshot() -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, contentScaleFactor)
+        return snapshot(contentScale: contentScaleFactor)
+    }
+    
+    /// take a snapshot on current canvas and export an image
+    open func snapshot(contentScale: CGFloat) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, contentScale)
         drawHierarchy(in: bounds, afterScreenUpdates: true)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
