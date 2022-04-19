@@ -12,36 +12,37 @@ open class Lasso: Brush {
     open override func renderEnded(at pan: Pan, on canvas: MLCanvas) {
         super.renderEnded(at: pan, on: canvas)
         
-        // fill polygon
+        // transform lines to fill lasso polygon
         guard let lineStrip = canvas.data.currentElement as? LineStrip,
               lineStrip.lines.count > 0
         else { return }
-
+        
         let lines = lineStrip.lines
-        
-        let shape = MLLassoLayer()
-        shape.opacity = Float(opacity)
-        shape.lineWidth = pointSize
-        shape.lineJoin = CAShapeLayerLineJoin.miter
-        shape.strokeColor = color.cgColor
-        shape.fillColor = color.cgColor
-
-        let path = UIBezierPath()
-        path.move(to: lines.first!.begin)
-        path.addLine(to: lines.first!.end)
-        for i in 1 ..< lines.count {
-            path.addLine(to: lines[i].begin)
-            path.addLine(to: lines[i].end)
+        let lineNumber = lines.count
+        let halfLineNumber = lineNumber / 2
+        var newLines: [MLLine] = []
+        for i in 0 ..< halfLineNumber {
+            let firstLine = lines[i]
+            let secondLine = lines[lineNumber - i - 1]
+            let firstNewLine = MLLine(
+                begin: firstLine.begin,
+                end: secondLine.begin,
+                pointSize: firstLine.pointSize * 3,
+                pointStep: 1,
+                color: firstLine.color
+            )
+            let secondNewLine = MLLine(
+                begin: firstLine.end,
+                end: secondLine.end,
+                pointSize: firstLine.pointSize * 3,
+                pointStep: 1,
+                color: firstLine.color
+            )
+            newLines.append(firstNewLine)
+            newLines.append(secondNewLine)
         }
-        path.close()
         
-        shape.path = path.cgPath
-        
-        canvas.layer.addSublayer(shape)
+        super.render(lines: newLines, on: canvas)
     }
-    
-}
-
-class MLLassoLayer: CAShapeLayer {
     
 }
