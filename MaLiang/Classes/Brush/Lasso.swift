@@ -27,14 +27,14 @@ open class Lasso: Brush {
             let firstNewLine = MLLine(
                 begin: firstLine.begin,
                 end: secondLine.begin,
-                pointSize: firstLine.pointSize * 3,
+                pointSize: firstLine.pointSize * 2.5,
                 pointStep: 1,
                 color: firstLine.color
             )
             let secondNewLine = MLLine(
                 begin: firstLine.end,
                 end: secondLine.end,
-                pointSize: firstLine.pointSize * 3,
+                pointSize: firstLine.pointSize * 2.5,
                 pointStep: 1,
                 color: firstLine.color
             )
