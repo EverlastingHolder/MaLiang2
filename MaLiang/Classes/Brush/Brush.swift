@@ -28,7 +28,7 @@ public struct Pan {
         }
     }
     
-    init(point: CGPoint, force: CGFloat) {
+    public init(point: CGPoint, force: CGFloat) {
         self.point = point
         self.force = force
     }
