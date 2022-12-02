@@ -337,6 +337,15 @@ open class MLCanvas: MetalView {
         actionObservers.canvas(self, didFinishLineAt: pan.point, force: pan.force)
     }
     
+    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let pan = firstAvaliablePan(from: touches) else {
+            return
+        }
+        currentBrush.renderEnded(at: pan, on: self)
+        data.finishCurrentElement()
+        actionObservers.canvas(self, didFinishLineAt: pan.point, force: pan.force)
+    }
+    
     public func firstAvaliablePan(from touches: Set<UITouch>) -> Pan? {
         var touch: UITouch?
         if #available(iOS 9.1, *), isPencilMode {
