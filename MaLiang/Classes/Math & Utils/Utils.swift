@@ -22,11 +22,7 @@ extension Bundle {
 
 extension MTLDevice {
     func libraryForMaLiang() -> MTLLibrary? {
-        let framework = Bundle(for: MLCanvas.self)
-        guard let resource = framework.path(forResource: "default", ofType: "metallib") else {
-            return nil
-        }
-        return try? makeLibrary(filepath: resource)
+        return try? self.makeDefaultLibrary(bundle: Bundle.module)
     }
 }
 
