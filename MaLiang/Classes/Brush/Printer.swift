@@ -25,26 +25,16 @@ open class Printer: Brush {
     
     /// Blending options for this brush, overrides to implement your own blending options
     public override func setupBlendOptions(for attachment: MTLRenderPipelineColorAttachmentDescriptor) {
-//        attachment.isBlendingEnabled = true
-//        
-//        attachment.rgbBlendOperation = .add
-//        attachment.alphaBlendOperation = .add
-//
-//        attachment.sourceRGBBlendFactor = .sourceAlpha
-//        attachment.sourceAlphaBlendFactor = .one
-//
-//        attachment.destinationRGBBlendFactor = .oneMinusSourceAlpha
-//        attachment.destinationAlphaBlendFactor = .oneMinusSourceAlpha
-        
         attachment.isBlendingEnabled = true
-
-        attachment.rgbBlendOperation = .max
-        attachment.sourceRGBBlendFactor = .one
-        attachment.destinationRGBBlendFactor = .one
         
-        attachment.alphaBlendOperation = .max
+        attachment.rgbBlendOperation = .add
+        attachment.alphaBlendOperation = .add
+
+        attachment.sourceRGBBlendFactor = .sourceAlpha
         attachment.sourceAlphaBlendFactor = .one
-        attachment.destinationAlphaBlendFactor = .one
+
+        attachment.destinationRGBBlendFactor = .oneMinusSourceAlpha
+        attachment.destinationAlphaBlendFactor = .oneMinusSourceAlpha
     }
 
     internal func render(chartlet: Chartlet, on renderTarget: RenderTarget? = nil) {

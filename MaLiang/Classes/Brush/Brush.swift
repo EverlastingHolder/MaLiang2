@@ -186,13 +186,13 @@ open class Brush {
     open func setupBlendOptions(for attachment: MTLRenderPipelineColorAttachmentDescriptor) {
         attachment.isBlendingEnabled = true
 
-        attachment.rgbBlendOperation = .max
-        attachment.sourceRGBBlendFactor = .one
-        attachment.destinationRGBBlendFactor = .one
+        attachment.rgbBlendOperation = .add
+        attachment.sourceRGBBlendFactor = .sourceAlpha
+        attachment.destinationRGBBlendFactor = .oneMinusSourceAlpha
         
-        attachment.alphaBlendOperation = .max
+        attachment.alphaBlendOperation = .add
         attachment.sourceAlphaBlendFactor = .one
-        attachment.destinationAlphaBlendFactor = .one
+        attachment.destinationAlphaBlendFactor = .oneMinusSourceAlpha
     }
     
     // MARK: - Render Actions
