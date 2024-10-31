@@ -22,8 +22,5 @@ let package = Package(
             name: "MaLiang",
             dependencies: [],
             path: "MaLiang")
-    ],
-    resources: [
-     .copy("MaLiang/Classes/MetalBase/Shaders")
-   ]
+    ]
 )
