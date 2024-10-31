@@ -81,7 +81,7 @@ open class LineStrip: CanvasElement {
             // fix opacity of line color
             let overlapping = max(1, line.pointSize / line.pointStep)
             var renderingColor = line.color ?? color
-//            renderingColor.alpha = renderingColor.alpha / Float(overlapping) * 2.5
+            renderingColor.alpha = renderingColor.alpha / Float(overlapping) * 2.5
 //            print("real color: \(renderingColor), overlapping: \(overlapping)")
             
             for i in 0 ..< Int(count) {
