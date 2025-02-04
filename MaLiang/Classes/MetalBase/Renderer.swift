@@ -69,8 +69,8 @@ extension Renderer: MTKViewDelegate {
 
             if let vertex_buffer = lineStrip.retrieveBuffers(rotation: brush.rotation) {
                 commandEncoder?.setVertexBuffer(vertex_buffer, offset: 0, index: 0)
-                commandEncoder?.setVertexBuffer(target.uniform_buffer, offset: 0, index: 1)
-                commandEncoder?.setVertexBuffer(target.transform_buffer, offset: 0, index: 2)
+                commandEncoder?.setVertexBuffer(target.uniformBuffer, offset: 0, index: 1)
+                commandEncoder?.setVertexBuffer(target.transformBuffer, offset: 0, index: 2)
                 if let texture = brush.texture {
                     commandEncoder?.setFragmentTexture(texture, index: 0)
                 }

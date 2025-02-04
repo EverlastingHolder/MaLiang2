@@ -5,16 +5,16 @@
 //  Created by Harley-xk on 2019/5/5.
 //
 
-import Foundation
 import CoreGraphics
+import Foundation
 import Metal
 import UIKit
 
 public final class GlowingBrush: Brush {
-        
+    
     /// size proportion of the core line, must be set between 0 ~ 1, defaults to 0.5
     public var coreProportion: CGFloat = 0.25
-
+    
     /// color of core lines, defaults to white
     public var coreColor: UIColor = .white {
         didSet {
@@ -50,11 +50,10 @@ public final class GlowingBrush: Brush {
             subBrush.forceOnTap = forceOnTap
         }
     }
-
-
+    
     // sub brush to render core white line
     private var subBrush: Brush!
-
+    
     private var pendingCoreLines: [MLLine] = []
     
     // designed initializer, will be called by target when reigster called
@@ -65,9 +64,14 @@ public final class GlowingBrush: Brush {
         subBrush.color = coreColor
         subBrush.opacity = 10
     }
-
+    
     /// get a line with specified begin and end location
-    public override func makeLine(from: CGPoint, to: CGPoint, force: CGFloat? = nil, uniqueColor: Bool = false) -> [MLLine] {
+    public override func makeLine(
+        from: CGPoint,
+        to: CGPoint,
+        force: CGFloat? = nil,
+        uniqueColor: Bool = false
+    ) -> [MLLine] {
         let shadowLines = super.makeLine(from: from, to: to, force: force)
         let delta = (pointSize * (1 - coreProportion)) / 2
         var coreLines: [MLLine] = []
@@ -86,4 +90,3 @@ public final class GlowingBrush: Brush {
         return lines
     }
 }
-

@@ -52,7 +52,8 @@ open class MLCanvas: MetalView {
     ///
     /// - Parameter texture: texture data of brush
     /// - Returns: registered brush
-    @discardableResult open func registerBrush<T: Brush>(name: String? = nil, from data: Data) throws -> T {
+    @discardableResult
+    open func registerBrush<T: Brush>(name: String? = nil, from data: Data) throws -> T {
         let texture = try makeTexture(with: data)
         let brush = T(name: name, textureID: texture.id, target: self)
         registeredBrushes.append(brush)
@@ -63,14 +64,16 @@ open class MLCanvas: MetalView {
     ///
     /// - Parameter file: texture file of brush
     /// - Returns: registered brush
-    @discardableResult open func registerBrush<T: Brush>(name: String? = nil, from file: URL) throws -> T {
+    @discardableResult
+    open func registerBrush<T: Brush>(name: String? = nil, from file: URL) throws -> T {
         let data = try Data(contentsOf: file)
         return try registerBrush(name: name, from: data)
     }
     
     /// Register a new brush with texture already registered on this canvas
     ///
-    /// - Parameter textureID: id of a texture, default round texture will be used if sets to nil or texture id not found
+    /// - Parameter textureID: id of a texture, default round texture
+    /// will be used if sets to nil or texture id not found
     open func registerBrush<T: Brush>(name: String? = nil, textureID: String? = nil) throws -> T {
         let brush = T(name: name, textureID: textureID, target: self)
         registeredBrushes.append(brush)
@@ -213,7 +216,7 @@ open class MLCanvas: MetalView {
     /// - Attention: SAVE your data before call this method!
     /// - Parameter redraw: if should redraw the canvas after, defaults to true
     open func resetData(redraw: Bool = true) {
-        let oldData = data!
+        let oldData = data ?? .init()
         let newData = CanvasData()
         // link registered observers to new data
         newData.observers = data.observers
@@ -272,7 +275,7 @@ open class MLCanvas: MetalView {
             return
         }
         
-        let brush = currentBrush!
+        guard let brush = currentBrush else { return }
         let lines = brush.makeLine(from: point, to: to ?? point)
         render(lines: lines)
     }
@@ -349,15 +352,15 @@ open class MLCanvas: MetalView {
     public func firstAvaliablePan(from touches: Set<UITouch>) -> Pan? {
         var touch: UITouch?
         if #available(iOS 9.1, *), isPencilMode {
-            touch = touches.first { (t) -> Bool in
-                return t.type == .pencil
+            touch = touches.first { (touch) -> Bool in
+                return touch.type == .pencil
             }
         } else {
             touch = touches.first
         }
-        guard let t = touch else {
+        guard let touch else {
             return nil
         }
-        return Pan(touch: t, on: self)
+        return Pan(touch: touch, on: self)
     }
 }

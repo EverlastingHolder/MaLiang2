@@ -51,10 +51,10 @@ open class Printer: Brush {
         
         commandEncoder?.setRenderPipelineState(pipelineState)
         
-        if let vertex_buffer = chartlet.vertex_buffer, let texture = self.target?.findTexture(by: chartlet.textureID)?.texture {
+        if let vertex_buffer = chartlet.vertexBuffer, let texture = self.target?.findTexture(by: chartlet.textureID)?.texture {
             commandEncoder?.setVertexBuffer(vertex_buffer, offset: 0, index: 0)
-            commandEncoder?.setVertexBuffer(target.uniform_buffer, offset: 0, index: 1)
-            commandEncoder?.setVertexBuffer(target.transform_buffer, offset: 0, index: 2)
+            commandEncoder?.setVertexBuffer(target.uniformBuffer, offset: 0, index: 1)
+            commandEncoder?.setVertexBuffer(target.transformBuffer, offset: 0, index: 2)
             commandEncoder?.setFragmentTexture(texture, index: 0)
             commandEncoder?.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
         }

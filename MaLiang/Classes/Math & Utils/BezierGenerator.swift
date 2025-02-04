@@ -54,15 +54,15 @@ class BezierGenerator {
         
         var begin: CGPoint
         var control: CGPoint
-        let end = CGPoint.middle(p1: points[step], p2: points[step + 1])
+        let end = CGPoint.middle(point1: points[step], point2: points[step + 1])
 
         var vertices: [CGPoint] = []
         if step == 1 {
             begin = points[0]
-            let middle1 = CGPoint.middle(p1: points[0], p2: points[1])
-            control = CGPoint.middle(p1: middle1, p2: points[1])
+            let middle1 = CGPoint.middle(point1: points[0], point2: points[1])
+            control = CGPoint.middle(point1: middle1, point2: points[1])
         } else {
-            begin = CGPoint.middle(p1: points[step - 1], p2: points[step])
+            begin = CGPoint.middle(point1: points[step - 1], point2: points[step])
             control = points[step]
         }
         
