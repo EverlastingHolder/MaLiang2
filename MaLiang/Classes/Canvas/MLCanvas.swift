@@ -44,7 +44,7 @@ open class MLCanvas: MetalView {
     
     internal var actionObservers = ActionObserverPool()
     
-    override init(frame frameRect: CGRect, device: (any MTLDevice)?) {
+    override public init(frame frameRect: CGRect, device: (any MTLDevice)?) {
         super.init(frame: frameRect, device: device)
         setup()
     }
