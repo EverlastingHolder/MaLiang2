@@ -60,8 +60,8 @@ open class RenderTarget {
     
     internal var pixelFormat: MTLPixelFormat = .bgra8Unorm
     internal var drawableSize: CGSize
-    internal var uniform_buffer: MTLBuffer!
-    internal var transform_buffer: MTLBuffer!
+    internal var uniformBuffer: MTLBuffer!
+    internal var transformBuffer: MTLBuffer!
     internal var renderPassDescriptor: MTLRenderPassDescriptor?
     internal var commandBuffer: MTLCommandBuffer?
     internal var commandQueue: MTLCommandQueue?
@@ -73,7 +73,7 @@ open class RenderTarget {
         let zoomUniform = 2 * Float(zoom / scale )
         metrix.scaling(x: zoomUniform  / Float(size.width), y: -zoomUniform / Float(size.height), z: 1)
         metrix.translation(x: -1, y: 1, z: 0)
-        uniform_buffer = device?.makeBuffer(bytes: metrix.m, length: MemoryLayout<Float>.size * 16, options: [])
+        uniformBuffer = device?.makeBuffer(bytes: metrix.matrix, length: MemoryLayout<Float>.size * 16, options: [])
         
         updateTransformBuffer()
     }
@@ -81,7 +81,7 @@ open class RenderTarget {
     internal func updateTransformBuffer() {
         let scaleFactor = UIScreen.main.nativeScale
         var transform = ScrollingTransform(offset: contentOffset * scaleFactor, scale: scale)
-        transform_buffer = device?.makeBuffer(bytes: &transform, length: MemoryLayout<ScrollingTransform>.stride, options: [])
+        transformBuffer = device?.makeBuffer(bytes: &transform, length: MemoryLayout<ScrollingTransform>.stride, options: [])
     }
     
     internal func prepareForDraw() {

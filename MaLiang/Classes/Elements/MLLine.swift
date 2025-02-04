@@ -5,8 +5,8 @@
 //  Created by Harley-xk on 2019/4/24.
 //
 
-import Foundation
 import CoreGraphics
+import Foundation
 
 /// a shot line with serveral points, base unit of line strip
 public struct MLLine: Codable {

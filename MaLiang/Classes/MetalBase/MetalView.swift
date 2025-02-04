@@ -6,9 +6,9 @@
 //  Copyright © 2019 Harley-xk. All rights reserved.
 //
 
-import UIKit
-import QuartzCore
 import MetalKit
+import QuartzCore
+import UIKit
 
 internal let sharedDevice = MTLCreateSystemDefaultDevice()
 
@@ -17,11 +17,11 @@ open class MetalView: MTKView {
     // MARK: - Brush Textures
     
     func makeTexture(with data: Data, id: String? = nil) throws -> MLTexture {
-        guard metalAvaliable else {
+        guard metalAvaliable, let device else {
             throw MLError.simulatorUnsupported
         }
-        let textureLoader = MTKTextureLoader(device: device!)
-        let texture = try textureLoader.newTexture(data: data, options: [.SRGB : false])
+        let textureLoader = MTKTextureLoader(device: device)
+        let texture = try textureLoader.newTexture(data: data, options: [.SRGB: false])
         return MLTexture(id: id ?? UUID().uuidString, texture: texture)
     }
     
@@ -67,7 +67,12 @@ open class MetalView: MTKView {
     open func setup() {
         guard metalAvaliable else {
             print("<== Attension ==>")
-            print("You are running MaLiang on a Simulator, whitch is not supported by Metal. So painting is not alvaliable now. \nBut you can go on testing your other businesses which are not relative with MaLiang. Or you can also runs MaLiang on your Mac with Catalyst enabled now.")
+            print("""
+"You are running MaLiang on a Simulator, whitch is not supported by Metal.
+So painting is not alvaliable now. \nBut you can go on testing your other
+businesses which are not relative with MaLiang.
+Or you can also runs MaLiang on your Mac with Catalyst enabled now.
+""")
             print("<== Attension ==>")
             return
         }
@@ -93,11 +98,11 @@ open class MetalView: MTKView {
 
     private func setupPiplineState() throws {
         let library = device?.libraryForMaLiang()
-        let vertex_func = library?.makeFunction(name: "vertex_render_target")
-        let fragment_func = library?.makeFunction(name: "fragment_render_target")
+        let vertexFunc = library?.makeFunction(name: "vertex_render_target")
+        let fragmentFunc = library?.makeFunction(name: "fragment_render_target")
         let rpd = MTLRenderPipelineDescriptor()
-        rpd.vertexFunction = vertex_func
-        rpd.fragmentFunction = fragment_func
+        rpd.vertexFunction = vertexFunc
+        rpd.fragmentFunction = fragmentFunc
         rpd.colorAttachments[0].pixelFormat = colorPixelFormat
         pipelineState = try device?.makeRenderPipelineState(descriptor: rpd)
     }
@@ -108,24 +113,30 @@ open class MetalView: MTKView {
     private var commandQueue: MTLCommandQueue?
 
     // Uniform buffers
-    private var render_target_vertex: MTLBuffer!
-    private var render_target_uniform: MTLBuffer!
+    private var renderTargetVertex: MTLBuffer!
+    private var renderTargetUniform: MTLBuffer!
     
     func setupTargetUniforms() {
         let size = drawableSize
-        let w = size.width, h = size.height
+        let width = size.width, height = size.height
         let vertices = [
-            Vertex(position: CGPoint(x: 0 , y: 0), textCoord: CGPoint(x: 0, y: 0)),
-            Vertex(position: CGPoint(x: w , y: 0), textCoord: CGPoint(x: 1, y: 0)),
-            Vertex(position: CGPoint(x: 0 , y: h), textCoord: CGPoint(x: 0, y: 1)),
-            Vertex(position: CGPoint(x: w , y: h), textCoord: CGPoint(x: 1, y: 1)),
+            Vertex(position: CGPoint(x: 0, y: 0), textCoord: CGPoint(x: 0, y: 0)),
+            Vertex(position: CGPoint(x: width, y: 0), textCoord: CGPoint(x: 1, y: 0)),
+            Vertex(position: CGPoint(x: 0, y: height), textCoord: CGPoint(x: 0, y: 1)),
+            Vertex(position: CGPoint(x: width, y: height), textCoord: CGPoint(x: 1, y: 1))
         ]
-        render_target_vertex = device?.makeBuffer(bytes: vertices, length: MemoryLayout<Vertex>.stride * vertices.count, options: .cpuCacheModeWriteCombined)
+        renderTargetVertex = device?.makeBuffer(
+            bytes: vertices,
+            length: MemoryLayout<Vertex>.stride * vertices.count,
+            options: .cpuCacheModeWriteCombined
+        )
         
         let metrix = Matrix.identity
         metrix.scaling(x: 2 / Float(size.width), y: -2 / Float(size.height), z: 1)
         metrix.translation(x: -1, y: 1, z: 0)
-        render_target_uniform = device?.makeBuffer(bytes: metrix.m, length: MemoryLayout<Float>.size * 16, options: [])
+        renderTargetUniform = device?
+            .makeBuffer(bytes: metrix.matrix,
+                        length: MemoryLayout<Float>.size * 16, options: [])
     }
     
     open override func draw(_ rect: CGRect) {
@@ -150,16 +161,21 @@ open class MetalView: MTKView {
         
         commandEncoder?.setRenderPipelineState(pipelineState)
         
-        commandEncoder?.setVertexBuffer(render_target_vertex, offset: 0, index: 0)
-        commandEncoder?.setVertexBuffer(render_target_uniform, offset: 0, index: 1)
+        commandEncoder?.setVertexBuffer(renderTargetVertex, offset: 0, index: 0)
+        commandEncoder?.setVertexBuffer(renderTargetUniform, offset: 0, index: 1)
         commandEncoder?.setFragmentTexture(texture, index: 0)
+        guard pipelineState != nil,
+              renderTargetVertex != nil,
+              renderTargetUniform != nil else {
+            return
+        }
         commandEncoder?.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
         
         commandEncoder?.endEncoding()
         if let drawable = currentDrawable {
             commandBuffer?.present(drawable)
         }
-        commandBuffer?.commit()        
+        commandBuffer?.commit()
     }
 }
 

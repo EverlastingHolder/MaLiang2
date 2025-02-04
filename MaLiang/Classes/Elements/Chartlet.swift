@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import UIKit
 import Metal
+import UIKit
 
 /// not implemented yet
 open class Chartlet: CanvasElement {
@@ -40,23 +40,37 @@ open class Chartlet: CanvasElement {
         canvas?.printer.render(chartlet: self, on: target)
     }
     
-    lazy var vertex_buffer: MTLBuffer? = {
+    lazy var vertexBuffer: MTLBuffer? = {
         let scale = canvas?.printer.target?.contentScaleFactor ?? UIScreen.main.nativeScale
         
         let center = self.center * scale
         let halfSize = self.size * scale * 0.5
         let angle = self.angle ?? 0
         let vertexes = [
-            Vertex(position: CGPoint(x: center.x - halfSize.width, y: center.y - halfSize.height).rotatedBy(angle, anchor: center),
-                   textCoord: CGPoint(x: 0, y: 0)),
-            Vertex(position: CGPoint(x: center.x + halfSize.width , y: center.y - halfSize.height).rotatedBy(angle, anchor: center),
-                   textCoord: CGPoint(x: 1, y: 0)),
-            Vertex(position: CGPoint(x: center.x - halfSize.width , y: center.y + halfSize.height).rotatedBy(angle, anchor: center),
-                   textCoord: CGPoint(x: 0, y: 1)),
-            Vertex(position: CGPoint(x: center.x + halfSize.width , y: center.y + halfSize.height).rotatedBy(angle, anchor: center),
-                   textCoord: CGPoint(x: 1, y: 1)),
+            Vertex(
+                position: CGPoint(x: center.x - halfSize.width, y: center.y - halfSize.height)
+                    .rotatedBy(angle, anchor: center),
+                textCoord: CGPoint(x: 0, y: 0)
+            ),
+            Vertex(
+                position: CGPoint(x: center.x + halfSize.width, y: center.y - halfSize.height)
+                    .rotatedBy(angle, anchor: center),
+                textCoord: CGPoint(x: 1, y: 0)
+            ),
+            Vertex(
+                position: CGPoint(x: center.x - halfSize.width, y: center.y + halfSize.height)
+                    .rotatedBy(angle, anchor: center),
+                textCoord: CGPoint(x: 0, y: 1)
+            ),
+            Vertex(
+                position: CGPoint(x: center.x + halfSize.width, y: center.y + halfSize.height)
+                    .rotatedBy(angle, anchor: center),
+                textCoord: CGPoint(x: 1, y: 1)
+            )
         ]
-        return sharedDevice?.makeBuffer(bytes: vertexes, length: MemoryLayout<Vertex>.stride * 4, options: .cpuCacheModeWriteCombined)
+        return sharedDevice?.makeBuffer(bytes: vertexes,
+                                        length: MemoryLayout<Vertex>.stride * 4,
+                                        options: .cpuCacheModeWriteCombined)
     }()
     
     // MARK: - Codable

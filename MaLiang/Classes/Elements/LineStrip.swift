@@ -42,7 +42,7 @@ open class LineStrip: CanvasElement {
     
     open func append(lines: [MLLine]) {
         self.lines.append(contentsOf: lines)
-        vertex_buffer = nil
+        vertexBuffer = nil
     }
     
     public func drawSelf(on target: RenderTarget?) {
@@ -51,20 +51,20 @@ open class LineStrip: CanvasElement {
     
     /// get vertex buffer for this line strip, remake if not exists
     open func retrieveBuffers(rotation: Brush.Rotation) -> MTLBuffer? {
-        if vertex_buffer == nil {
+        if vertexBuffer == nil {
             remakBuffer(rotation: rotation)
         }
-        return vertex_buffer
+        return vertexBuffer
     }
     
     /// count of vertexes, set when remake buffers
     open private(set) var vertexCount: Int = 0
     
-    private var vertex_buffer: MTLBuffer?
+    private var vertexBuffer: MTLBuffer?
     
     private func remakBuffer(rotation: Brush.Rotation) {
         
-        guard lines.count > 0 else {
+        guard !lines.isEmpty else {
             return
         }
         
@@ -75,8 +75,8 @@ open class LineStrip: CanvasElement {
             let count = max(line.length / line.pointStep, 1)
             
             var line = line
-            line.begin = line.begin * scale
-            line.end = line.end * scale
+            line.begin *= scale
+            line.end *= scale
 
             // fix opacity of line color
             let overlapping = max(1, line.pointSize / line.pointStep)
@@ -84,24 +84,31 @@ open class LineStrip: CanvasElement {
             renderingColor.alpha = renderingColor.alpha / Float(overlapping) * 2.5
 //            print("real color: \(renderingColor), overlapping: \(overlapping)")
             
-            for i in 0 ..< Int(count) {
-                let index = CGFloat(i)
+            for index in 0 ..< Int(count) {
+                let index = CGFloat(index)
                 let x = line.begin.x + (line.end.x - line.begin.x) * (index / count)
                 let y = line.begin.y + (line.end.y - line.begin.y) * (index / count)
                 
                 var angle: CGFloat = 0
                 switch rotation {
-                case let .fixed(a): angle = a
+                case let .fixed(arc): angle = arc
                 case .random: angle = CGFloat.random(in: -CGFloat.pi ... CGFloat.pi)
                 case .ahead: angle = line.angle
                 }
-                
-                vertexes.append(Point(x: x, y: y, color: renderingColor, size: line.pointSize * scale, angle: angle))
+                vertexes.append(Point(x: x, y: y,
+                                      color: renderingColor,
+                                      size: line.pointSize * scale,
+                                      angle: angle,
+                                      intensity: brush?.opacity ?? 0))
             }
         }
         
         vertexCount = vertexes.count
-        vertex_buffer = sharedDevice?.makeBuffer(bytes: vertexes, length: MemoryLayout<Point>.stride * vertexCount, options: .cpuCacheModeWriteCombined)
+        vertexBuffer = sharedDevice?.makeBuffer(
+            bytes: vertexes,
+            length: MemoryLayout<Point>.stride * vertexCount,
+            options: .cpuCacheModeWriteCombined
+        )
     }
     
     // MARK: - Coding

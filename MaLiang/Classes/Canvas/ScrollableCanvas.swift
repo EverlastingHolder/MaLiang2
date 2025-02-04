@@ -63,7 +63,8 @@ open class ScrollableCanvas: MLCanvas {
     private var offsetAnchor: CGPoint = .zero
     private var beginLocation: CGPoint = .zero
     
-    @objc private func handlePinchGestureRecognizer(_ gesture: UIPinchGestureRecognizer) {
+    @objc
+    private func handlePinchGestureRecognizer(_ gesture: UIPinchGestureRecognizer) {
         let location = gesture.location(in: self)
         switch gesture.state {
         case .began:
@@ -91,7 +92,6 @@ open class ScrollableCanvas: MLCanvas {
             if offsetChanged {
                 actionObservers.canvasDidScroll(self)
             }
-
         case .ended: fallthrough
         case .cancelled: fallthrough
         case .failed:
@@ -102,7 +102,8 @@ open class ScrollableCanvas: MLCanvas {
         }
     }
     
-    @objc private func handleMoveGestureRecognizer(_ gesture: UIPanGestureRecognizer) {
+    @objc
+    private func handleMoveGestureRecognizer(_ gesture: UIPanGestureRecognizer) {
         let location = gesture.location(in: self)
         switch gesture.state {
         case .began:
@@ -126,7 +127,7 @@ open class ScrollableCanvas: MLCanvas {
     
     // MARK: - Scrolling Indicators
     
-    /// show indicator while scrolling, like UIScrollView
+    // show indicator while scrolling, like UIScrollView
     
     // defaults to true if width of contentSize is larger than bounds
     open var showHorizontalScrollIndicator = true
