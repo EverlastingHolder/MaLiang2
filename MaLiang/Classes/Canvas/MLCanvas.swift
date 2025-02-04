@@ -15,7 +15,7 @@ open class MLCanvas: MetalView {
     open var defaultBrush: Brush!
     
     /// unique identifier
-    open var uuid: String = UUID().uuidString
+    open var uuid: String?
     
     /// printer to print image textures on canvas
     open private(set) var printer: Printer!
