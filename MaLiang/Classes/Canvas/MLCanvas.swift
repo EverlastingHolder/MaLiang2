@@ -44,6 +44,17 @@ open class MLCanvas: MetalView {
     
     internal var actionObservers = ActionObserverPool()
     
+    override public init(frame frameRect: CGRect, device: (any MTLDevice)?) {
+        super.init(frame: frameRect, device: device)
+        setup()
+    }
+    
+    @MainActor
+    required public init(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+    
     // add an observer to observe data changes, observers are not retained
     open func addObserver(_ observer: ActionObserver) {
         // pure nil objects
