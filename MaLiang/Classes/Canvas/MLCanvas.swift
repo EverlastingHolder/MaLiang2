@@ -14,6 +14,9 @@ open class MLCanvas: MetalView {
     /// default round point brush, will not show in registeredBrushes
     open var defaultBrush: Brush!
     
+    /// unique identifier
+    open var uuid: String = UUID().uuidString
+    
     /// printer to print image textures on canvas
     open private(set) var printer: Printer!
     
