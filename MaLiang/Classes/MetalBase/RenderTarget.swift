@@ -5,10 +5,10 @@
 //  Created by Harley-xk on 2019/4/15.
 //
 
-import UIKit
 import Foundation
 import Metal
 import simd
+import UIKit
 
 /// a target for any thing that can be render on
 open class RenderTarget {
@@ -71,7 +71,7 @@ open class RenderTarget {
         self.drawableSize = size
         let metrix = Matrix.identity
         let zoomUniform = 2 * Float(zoom / scale )
-        metrix.scaling(x: zoomUniform  / Float(size.width), y: -zoomUniform / Float(size.height), z: 1)
+        metrix.scaling(x: zoomUniform / Float(size.width), y: -zoomUniform / Float(size.height), z: 1)
         metrix.translation(x: -1, y: 1, z: 0)
         uniformBuffer = device?.makeBuffer(bytes: metrix.matrix, length: MemoryLayout<Float>.size * 16, options: [])
         
@@ -81,7 +81,11 @@ open class RenderTarget {
     internal func updateTransformBuffer() {
         let scaleFactor = UIScreen.main.nativeScale
         var transform = ScrollingTransform(offset: contentOffset * scaleFactor, scale: scale)
-        transformBuffer = device?.makeBuffer(bytes: &transform, length: MemoryLayout<ScrollingTransform>.stride, options: [])
+        transformBuffer = device?.makeBuffer(
+            bytes: &transform,
+            length: MemoryLayout<ScrollingTransform>.stride,
+            options: []
+        )
     }
     
     internal func prepareForDraw() {
@@ -99,6 +103,7 @@ open class RenderTarget {
     
     internal func commitCommands() {
         commandBuffer?.commit()
+        commandBuffer?.waitUntilCompleted()
         commandBuffer = nil
     }
     
@@ -111,10 +116,8 @@ open class RenderTarget {
                                                                          width: Int(drawableSize.width),
                                                                          height: Int(drawableSize.height),
                                                                          mipmapped: false)
-        textureDescriptor.usage = [.renderTarget, .shaderRead]
+        textureDescriptor.usage = [.renderTarget, .shaderRead, .shaderWrite]
         let texture = device?.makeTexture(descriptor: textureDescriptor)
-        texture?.clear()
         return texture
     }
-    
 }
