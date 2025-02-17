@@ -204,12 +204,16 @@ fragment float4 fragment_point_func_without_texture(Point point_data [[ stage_in
 
 fragment float4 fragment_mask_func(Point point_data [[ stage_in ]],
                                    texture2d<float> tex2d [[ texture(0) ]],
-                                   texture2d<float> mask [[ texture(1) ]],
-                                   float2 pointCoord [[point_coord]]
-                                   )
+                                   float2 pointCoord [[ point_coord ]],
+                                   texture2d<float> texCanvas [[ texture(1) ]])
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
+    float2 texCanvasSize = float2(texCanvas.get_width(), texCanvas.get_height());
+    
+    float2 sampleCoord = float2(point_data.position.x, point_data.position.y);
+    
     float4 mainColor = float4(tex2d.sample(textureSampler, pointCoord));
-    float4 maskColor = float4(mask.sample(textureSampler, pointCoord));
+    float4 maskColor = texCanvas.sample(textureSampler, sampleCoord / texCanvasSize);
+    
     return float4(maskColor.rgb, mainColor.a);
 }

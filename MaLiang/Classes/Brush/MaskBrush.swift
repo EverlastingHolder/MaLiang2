@@ -11,17 +11,6 @@ import MetalKit
 
 open class MaskBrush: Brush {
     
-    public private(set) var maskTexture: MTLTexture?
-    
-    required public init(maskTexture: MTLTexture?, name: String?, textureID: String?, target: MLCanvas) {
-        self.maskTexture = maskTexture
-        super.init(name: name, textureID: textureID, target: target)
-    }
-    
-    required public init(name: String?, textureID: String?, target: MLCanvas) {
-        fatalError("init(name:textureID:target:) has not been implemented")
-    }
-    
     /// Переопределение метода шейдеров для кисти
     open override func makeShaderFragmentFunction(from library: MTLLibrary) -> MTLFunction? {
         // Используем пользовательский фрагментный шейдер для растушевки
@@ -65,7 +54,7 @@ open class MaskBrush: Brush {
             if let texture = texture {
                 commandEncoder?.setFragmentTexture(texture, index: 0)
             }
-            if let texture = maskTexture {
+            if let texture = renderTarget?.texture {
                 commandEncoder?.setFragmentTexture(texture, index: 1)
             }
             commandEncoder?.drawPrimitives(type: .point, vertexStart: 0, vertexCount: lineStrip.vertexCount)
