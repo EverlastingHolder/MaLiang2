@@ -209,6 +209,7 @@ fragment float4 fragment_mask_func(Point point_data [[ stage_in ]],
                                    )
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
-    float4 color = float4(tex2d.sample(textureSampler, pointCoord));
-    return float4(color.rgb, color.a * point_data.color.a);
+    float4 mainColor = float4(tex2d.sample(textureSampler, pointCoord));
+    float4 maskColor = float4(mask.sample(textureSampler, pointCoord));
+    return float4(maskColor.rgb, mainColor.a);
 }
