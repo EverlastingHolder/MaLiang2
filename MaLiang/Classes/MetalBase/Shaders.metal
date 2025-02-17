@@ -201,3 +201,14 @@ fragment float4 fragment_point_func_without_texture(Point point_data [[ stage_in
     }
     return point_data.color;
 }
+
+fragment float4 fragment_mask_func(Point point_data [[ stage_in ]],
+                                   texture2d<float> tex2d [[ texture(0) ]],
+                                   texture2d<float> mask [[ texture(1) ]],
+                                   float2 pointCoord [[point_coord]]
+                                   )
+{
+    constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
+    float4 color = float4(tex2d.sample(textureSampler, pointCoord));
+    return float4(color.rgb, color.a * point_data.color.a);
+}
