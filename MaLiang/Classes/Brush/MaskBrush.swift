@@ -11,9 +11,11 @@ import MetalKit
 
 open class MaskBrush: Brush {
     
+    open var maskTexture: MTLTexture?
+    
     /// Переопределение метода шейдеров для кисти
     open override func makeShaderFragmentFunction(from library: MTLLibrary) -> MTLFunction? {
-        // Используем пользовательский фрагментный шейдер для растушевки
+        // Используем пользовательский фрагментный шейдер для проявления маски
         return library.makeFunction(name: "fragment_mask_func")
     }
     
@@ -51,11 +53,8 @@ open class MaskBrush: Brush {
             commandEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
             commandEncoder?.setVertexBuffer(target.uniformBuffer, offset: 0, index: 1)
             commandEncoder?.setVertexBuffer(target.transformBuffer, offset: 0, index: 2)
-            if let texture = texture {
+            if let texture = maskTexture {
                 commandEncoder?.setFragmentTexture(texture, index: 0)
-            }
-            if let texture = renderTarget?.texture {
-                commandEncoder?.setFragmentTexture(texture, index: 1)
             }
             commandEncoder?.drawPrimitives(type: .point, vertexStart: 0, vertexCount: lineStrip.vertexCount)
         }
