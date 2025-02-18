@@ -27,7 +27,7 @@ open class MaskBrush: Brush {
         attachment.alphaBlendOperation = .add
         
         attachment.sourceRGBBlendFactor = .sourceAlpha
-        attachment.sourceAlphaBlendFactor = .sourceAlpha
+        attachment.sourceAlphaBlendFactor = .one
         
         attachment.destinationRGBBlendFactor = .oneMinusSourceAlpha
         attachment.destinationAlphaBlendFactor = .oneMinusSourceAlpha
@@ -53,8 +53,11 @@ open class MaskBrush: Brush {
             commandEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
             commandEncoder?.setVertexBuffer(target.uniformBuffer, offset: 0, index: 1)
             commandEncoder?.setVertexBuffer(target.transformBuffer, offset: 0, index: 2)
-            if let texture = maskTexture {
-                commandEncoder?.setFragmentTexture(texture, index: 0)
+            if let mask = maskTexture {
+                commandEncoder?.setFragmentTexture(mask, index: 0)
+            }
+            if let canvas = target.texture {
+                commandEncoder?.setFragmentTexture(canvas, index: 1)
             }
             commandEncoder?.drawPrimitives(type: .point, vertexStart: 0, vertexCount: lineStrip.vertexCount)
         }

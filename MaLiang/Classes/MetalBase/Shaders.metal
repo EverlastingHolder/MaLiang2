@@ -109,8 +109,8 @@ fragment float4 fragment_render_target(Vertex vertex_data [[ stage_in ]],
 // Draw points with image textures, not with single color
 //======================================
 fragment float4 fragment_render_printer(Point point_data [[ stage_in ]],
-                                       texture2d<float> tex2d [[ texture(0) ]],
-                                       float2 pointCoord [[ point_coord ]])
+                                        texture2d<float> tex2d [[ texture(0) ]],
+                                        float2 pointCoord [[ point_coord ]])
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
     float2 text_coord = transformPointCoord(pointCoord, point_data.angle, float2(0.5));
@@ -164,6 +164,10 @@ fragment float4 fragment_render_smudge(Point point_data [[ stage_in ]],
         blurColor /= float(count);
     }
     
+    if (length(pointCoord - float2(0.5)) > 0.5) {
+        discard_fragment();
+    }
+    
     return blurColor;
 }
 
@@ -204,13 +208,18 @@ fragment float4 fragment_point_func_without_texture(Point point_data [[ stage_in
 
 fragment float4 fragment_mask_func(Point point_data [[ stage_in ]],
                                    texture2d<float> mask [[ texture(0) ]],
+                                   texture2d<float> canvas [[texture(1)]],
                                    float2 pointCoord [[ point_coord ]])
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
     
-    float2 texCanvasSize = float2(mask.get_width(), mask.get_height());
+    float2 canvasSize = float2(canvas.get_width(), canvas.get_height());
     float2 sampleCoord = float2(point_data.position.x, point_data.position.y);
-    float4 maskColor = mask.sample(textureSampler, sampleCoord / texCanvasSize);
+    float4 maskColor = mask.sample(textureSampler, sampleCoord / canvasSize);
+    
+    if (length(pointCoord - float2(0.5)) > 0.5) {
+        discard_fragment();
+    }
     
     return maskColor;
 }
