@@ -68,7 +68,7 @@ open class MLCanvas: MetalView {
     /// - Returns: registered brush
     @discardableResult
     open func registerBrush<T: Brush>(name: String? = nil, from data: Data) throws -> T {
-        let texture = try makeTexture(with: data)
+        let texture = try makeTexture(with: data, id: name)
         let brush = T(name: name, textureID: texture.id, target: self)
         registeredBrushes.append(brush)
         return brush
@@ -116,9 +116,6 @@ open class MLCanvas: MetalView {
         return registeredBrushes.first { $0.name == name }
     }
     
-    /// All textures created by this canvas
-    open private(set) var textures: [MLTexture] = []
-    
     /// make texture and cache it with ID
     ///
     /// - Parameters:
@@ -132,13 +129,12 @@ open class MLCanvas: MetalView {
             return exists
         }
         let texture = try super.makeTexture(with: data, id: id)
-        textures.append(texture)
         return texture
     }
     
     /// find texture by textureID
     open func findTexture(by id: String) -> MLTexture? {
-        return textures.first { $0.id == id }
+        return ResourceService.service.textures[id]
     }
     
     @available(*, deprecated, message: "this property will be removed soon, set the property forceSensitive on brush to 0 instead, changing this value will cause no affects")

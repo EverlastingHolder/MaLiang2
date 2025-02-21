@@ -1,3 +1,11 @@
+//
+//  ResourceService.swift
+//  MaLiang
+//
+//  Created by roman.moshkovcev on 21.02.2025.
+//  Copyright © 2025 MoveApp. All rights reserved.
+//
+
 import MetalKit
 
 public final class ResourceService {

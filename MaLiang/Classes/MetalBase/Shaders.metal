@@ -84,6 +84,13 @@ vertex Point vertex_point_func(constant Point *points [[ buffer(0) ]],
     return out;
 };
 
+//======================================
+// New structures for accelerometer data
+//======================================
+struct AccelerometerData {
+    float2 tilt; // x, y, tilt data
+};
+
 fragment float4 fragment_point_func(Point point_data [[ stage_in ]],
                                     texture2d<float> tex2d [[ texture(0) ]],
                                     float2 pointCoord  [[ point_coord ]])
@@ -105,12 +112,38 @@ fragment float4 fragment_render_target(Vertex vertex_data [[ stage_in ]],
     return color;
 };
 
+fragment float4 fragment_render_mask(Vertex vertex_data [[ stage_in ]],
+                                     texture2d<float> light_mask [[ texture(0) ]],
+                                     texture2d<float> main_texture [[ texture(1) ]],
+                                     texture2d<float> glore_texture [[ texture(2) ]],
+                                     constant AccelerometerData &accelData [[ buffer(0) ]]) {
+    
+    constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
+    
+    // Смещение текстуры на основе наклона
+    float2 offset = accelData.tilt * 0.1; // Регулируйте множитель
+    float2 uv = vertex_data.text_coord + float2(offset.y, offset.x);
+    
+    // Ограничение координат (чтобы текстура не "убегала")
+    uv = clamp(uv, 0.0, 1.0);
+    
+    float4 light_mask_color = float4(light_mask.sample(textureSampler, uv));
+    float4 main_color = main_texture.sample(textureSampler, vertex_data.text_coord);
+    float4 glore_color = glore_texture.sample(textureSampler, vertex_data.text_coord);
+    
+    if (glore_color.a > 0 && light_mask_color.a > 0) {
+        return float4(glore_color.rgb, light_mask_color.a);
+    }
+    
+    return main_color;
+};
+
 //======================================
 // Draw points with image textures, not with single color
 //======================================
 fragment float4 fragment_render_printer(Point point_data [[ stage_in ]],
-                                        texture2d<float> tex2d [[ texture(0) ]],
-                                        float2 pointCoord [[ point_coord ]])
+                                       texture2d<float> tex2d [[ texture(0) ]],
+                                       float2 pointCoord [[ point_coord ]])
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
     float2 text_coord = transformPointCoord(pointCoord, point_data.angle, float2(0.5));

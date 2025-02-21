@@ -27,4 +27,6 @@ public enum MLError: Error {
     
     /// running MaLiang on a Similator
     case simulatorUnsupported
+    
+    case createTextureFailed
 }

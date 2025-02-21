@@ -19,6 +19,7 @@ open class MLTexture: Hashable {
     init(id: String, texture: MTLTexture) {
         self.id = id
         self.texture = texture
+        self.texture.label = id
     }
 
     // size of texture in points

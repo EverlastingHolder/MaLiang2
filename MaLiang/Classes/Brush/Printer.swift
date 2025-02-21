@@ -47,7 +47,7 @@ open class Printer: Brush {
         target.prepareForDraw()
         
         /// get commandEncoder form resuable command buffer
-        let commandEncoder = target.makeCommandEncoder()
+        let commandEncoder = target.makeCommandEncoder(rpd: target.renderPassDescriptor)
         
         commandEncoder?.setRenderPipelineState(pipelineState)
         

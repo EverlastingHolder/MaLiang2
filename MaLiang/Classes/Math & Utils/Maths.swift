@@ -69,10 +69,11 @@ class Matrix {
     static var identity = Matrix()
     
     private init() {
-        matrix = [1, 0, 0, 0,
-             0, 1, 0, 0,
-             0, 0, 1, 0,
-             0, 0, 0, 1
+        matrix = [
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
         ]
     }
     
