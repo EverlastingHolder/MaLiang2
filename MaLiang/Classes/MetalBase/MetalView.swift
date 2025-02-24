@@ -10,7 +10,7 @@ import MetalKit
 import QuartzCore
 import UIKit
 
-internal let sharedDevice = MTLCreateSystemDefaultDevice()
+public let sharedDevice = MTLCreateSystemDefaultDevice()
 
 open class MetalView: MTKView {
     // pipeline state

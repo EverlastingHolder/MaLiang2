@@ -21,7 +21,7 @@ extension Bundle {
 }
 
 extension MTLDevice {
-    func libraryForMaLiang() -> MTLLibrary? {
+    public func libraryForMaLiang() -> MTLLibrary? {
         return try? self.makeDefaultLibrary(bundle: Bundle.module)
     }
 }
