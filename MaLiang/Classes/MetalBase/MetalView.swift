@@ -14,16 +14,16 @@ internal let sharedDevice = MTLCreateSystemDefaultDevice()
 
 open class MetalView: MTKView {
     // pipeline state
-    private(set) var pipelineState: MTLRenderPipelineState!
+    open private(set) var pipelineState: MTLRenderPipelineState!
     
     // render target for rendering contents to screen
-    internal var screenTarget: RenderTarget?
+    open private(set) var screenTarget: RenderTarget?
     
-    private(set) var commandQueue: MTLCommandQueue?
+    open private(set) var commandQueue: MTLCommandQueue?
 
     // Uniform buffers
-    private(set) var renderTargetVertex: MTLBuffer!
-    private(set) var renderTargetUniform: MTLBuffer!
+    open private(set) var renderTargetVertex: MTLBuffer!
+    open private(set) var renderTargetUniform: MTLBuffer!
     
     // MARK: - Setup
     
