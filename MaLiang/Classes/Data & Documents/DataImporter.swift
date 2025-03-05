@@ -79,7 +79,7 @@ open class DataImporter {
 
         DispatchQueue.main.async {
             /// redraw must be call on main thread
-            canvas.redraw()
+            canvas.redraw(isLoadingFromData: true)
         }
     }
 }

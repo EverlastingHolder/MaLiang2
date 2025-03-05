@@ -31,7 +31,7 @@ open class ScrollableCanvas: MLCanvas {
             if maxScale < zoom {
                 self.zoom = maxScale
                 self.scale = maxScale
-                self.redraw()
+                self.redraw(isLoadingFromData: false)
             }
         }
     }
@@ -85,7 +85,7 @@ open class ScrollableCanvas: MLCanvas {
             let offsetChanged = contentOffset == offset
             contentOffset = offset
             
-            redraw()
+            redraw(isLoadingFromData: false)
             updateScrollIndicators()
             
             actionObservers.canvas(self, didZoomTo: zoom)
@@ -114,7 +114,7 @@ open class ScrollableCanvas: MLCanvas {
                 return
             }
             contentOffset = (offsetAnchor - location).between(min: .zero, max: maxOffset)
-            redraw()
+            redraw(isLoadingFromData: false)
             updateScrollIndicators()
             actionObservers.canvasDidScroll(self)
         default: hidesScrollIndicators()

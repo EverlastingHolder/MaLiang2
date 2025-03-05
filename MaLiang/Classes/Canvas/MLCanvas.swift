@@ -216,7 +216,7 @@ open class MLCanvas: MetalView {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        redraw()
+//        redraw(isLoadingFromData: false)
     }
     
     // MARK: - Document
@@ -232,26 +232,26 @@ open class MLCanvas: MetalView {
         newData.observers = data.observers
         data = newData
         if redraw {
-            self.redraw()
+            self.redraw(isLoadingFromData: true)
         }
         data.observers.data(oldData, didResetTo: newData)
     }
     
     public func undo() {
         if let data = data, data.undo() {
-            redraw()
+            redraw(isLoadingFromData: false)
         }
     }
     
     public func redo() {
         if let data = data, data.redo() {
-            redraw()
+            redraw(isLoadingFromData: false)
         }
     }
     
     /// redraw elemets in document
     /// - Attention: thie method must be called on main thread
-    open func redraw(on target: RenderTarget? = nil) {
+    open func redraw(on target: RenderTarget? = nil, isLoadingFromData: Bool) {
         
         guard let target = target ?? screenTarget else {
             return
@@ -262,7 +262,7 @@ open class MLCanvas: MetalView {
         target.updateBuffer(with: drawableSize)
         target.clear()
         
-        data.elements.forEach { $0.drawSelf(on: target) }
+        data.elements.forEach { $0.drawSelf(on: target, isLoadingFromData: isLoadingFromData) }
         
         /// submit commands
         target.commitCommands()
@@ -274,7 +274,7 @@ open class MLCanvas: MetalView {
     open func render(lines: [MLLine]) {
         data.append(lines: lines, with: currentBrush)
         // create a temporary line strip and draw it on canvas
-        LineStrip(lines: lines, brush: currentBrush).drawSelf(on: screenTarget)
+        LineStrip(lines: lines, brush: currentBrush, isLoadingFromData: false).drawSelf(on: screenTarget, isLoadingFromData: false)
         /// submit commands
         screenTarget?.commitCommands()
     }
@@ -312,7 +312,7 @@ open class MLCanvas: MetalView {
         }
         
         data.append(chartlet: chartlet, grouped: grouped)
-        chartlet.drawSelf(on: screenTarget)
+        chartlet.drawSelf(on: screenTarget, isLoadingFromData: false)
         screenTarget?.commitCommands()
         setNeedsDisplay()
         

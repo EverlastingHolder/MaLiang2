@@ -17,9 +17,9 @@ open class ElementGroup<E: CanvasElement>: CanvasElement {
     open var elements: [E] = []
     
     /// draw this element on specifyied target
-    open func drawSelf(on target: RenderTarget?) {
+    open func drawSelf(on target: RenderTarget?, isLoadingFromData: Bool) {
         elements.forEach {
-            $0.drawSelf(on: target)
+            $0.drawSelf(on: target, isLoadingFromData: isLoadingFromData)
         }
     }
     

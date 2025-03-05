@@ -22,6 +22,8 @@ open class LineStrip: CanvasElement {
     // this color will be used when line's color not set
     public var color: MLColor
     
+    private var alpha: Float
+    
     /// line units of this line strip, avoid change this value directly when drawing.
     public var lines: [MLLine] = []
     
@@ -32,12 +34,13 @@ open class LineStrip: CanvasElement {
         }
     }
     
-    public init(lines: [MLLine], brush: Brush) {
+    public init(lines: [MLLine], brush: Brush, isLoadingFromData: Bool) {
         self.lines = lines
         self.brush = brush
         self.brushName = brush.name
         self.color = brush.renderingColor
-        remakBuffer(rotation: brush.rotation)
+        self.alpha = brush.renderingColor.alpha
+        remakBuffer(rotation: brush.rotation, isLoadingFromData: isLoadingFromData)
     }
     
     open func append(lines: [MLLine]) {
@@ -45,14 +48,14 @@ open class LineStrip: CanvasElement {
         vertexBuffer = nil
     }
     
-    public func drawSelf(on target: RenderTarget?) {
-        brush?.render(lineStrip: self, on: target)
+    public func drawSelf(on target: RenderTarget?, isLoadingFromData: Bool) {
+        brush?.render(lineStrip: self, on: target, isLoadingFromData: isLoadingFromData)
     }
     
     /// get vertex buffer for this line strip, remake if not exists
-    open func retrieveBuffers(rotation: Brush.Rotation) -> MTLBuffer? {
+    open func retrieveBuffers(rotation: Brush.Rotation, isLoadingFromData: Bool) -> MTLBuffer? {
         if vertexBuffer == nil {
-            remakBuffer(rotation: rotation)
+            remakBuffer(rotation: rotation, isLoadingFromData: isLoadingFromData)
         }
         return vertexBuffer
     }
@@ -62,7 +65,7 @@ open class LineStrip: CanvasElement {
     
     private var vertexBuffer: MTLBuffer?
     
-    private func remakBuffer(rotation: Brush.Rotation) {
+    private func remakBuffer(rotation: Brush.Rotation, isLoadingFromData: Bool) {
         
         guard !lines.isEmpty else {
             return
@@ -80,9 +83,12 @@ open class LineStrip: CanvasElement {
 
             // fix opacity of line color
             let overlapping = max(1, line.pointSize / line.pointStep)
-            var renderingColor = line.color ?? color
-            renderingColor.alpha = renderingColor.alpha / Float(overlapping) * 2.5
-//            print("real color: \(renderingColor), overlapping: \(overlapping)")
+            var renderingColor = color
+            if !isLoadingFromData {
+                renderingColor.alpha = renderingColor.alpha / Float(overlapping) * 2.5
+            }
+            alpha = renderingColor.alpha
+            print("current alpha: \(renderingColor.alpha), overlapping: \(overlapping), real alpha: \(color.alpha)")
             
             for index in 0 ..< Int(count) {
                 let index = CGFloat(index)
@@ -118,6 +124,7 @@ open class LineStrip: CanvasElement {
         case brush
         case lines
         case color
+        case alpha
     }
 
     public required init(from decoder: Decoder) throws {
@@ -125,14 +132,20 @@ open class LineStrip: CanvasElement {
         index = try container.decode(Int.self, forKey: .index)
         brushName = try container.decode(String.self, forKey: .brush)
         lines = try container.decode([MLLine].self, forKey: .lines)
+        alpha = try container.decode(Float.self, forKey: .alpha)
         color = try container.decode(MLColor.self, forKey: .color)
+        color.alpha = alpha
     }
     
     public func encode(to encoder: Encoder) throws {
+        if color.alpha > 1 {
+            color.alpha = 1
+        }
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(index, forKey: .index)
         try container.encode(brushName, forKey: .brush)
         try container.encode(lines, forKey: .lines)
         try container.encode(color, forKey: .color)
+        try container.encode(alpha, forKey: .alpha)
     }
 }

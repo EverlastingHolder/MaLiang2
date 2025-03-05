@@ -33,7 +33,7 @@ open class MaskBrush: Brush {
         attachment.destinationAlphaBlendFactor = .oneMinusSourceAlpha
     }
     
-    open override func render(lineStrip: LineStrip, on renderTarget: RenderTarget? = nil) {
+    open override func render(lineStrip: LineStrip, on renderTarget: RenderTarget? = nil, isLoadingFromData: Bool) {
         
         let renderTarget = renderTarget ?? target?.screenTarget
         
@@ -49,7 +49,7 @@ open class MaskBrush: Brush {
         
         commandEncoder?.setRenderPipelineState(pipelineState)
         
-        if let vertexBuffer = lineStrip.retrieveBuffers(rotation: rotation) {
+        if let vertexBuffer = lineStrip.retrieveBuffers(rotation: rotation, isLoadingFromData: isLoadingFromData) {
             commandEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
             commandEncoder?.setVertexBuffer(target.uniformBuffer, offset: 0, index: 1)
             commandEncoder?.setVertexBuffer(target.transformBuffer, offset: 0, index: 2)

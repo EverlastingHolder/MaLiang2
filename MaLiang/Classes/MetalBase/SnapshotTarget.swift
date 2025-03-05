@@ -67,9 +67,9 @@ open class SnapshotTarget: RenderTarget {
             updateBuffer(with: CGSize(width: drawableSize.width * scale, height: drawableSize.height * scale))
             prepareForDraw()
             clear()
-            canvasElement.drawSelf(on: self)
+            canvasElement.drawSelf(on: self, isLoadingFromData: false)
         } else {
-            canvas?.redraw(on: self)
+            canvas?.redraw(on: self, isLoadingFromData: false)
         }
         commitCommands()
     }

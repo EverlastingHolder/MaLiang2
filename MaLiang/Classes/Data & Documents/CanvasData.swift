@@ -16,13 +16,13 @@ public protocol CanvasElement: Codable {
     var index: Int { get set }
     
     /// draw this element on specifyied target
-    func drawSelf(on target: RenderTarget?)
+    func drawSelf(on target: RenderTarget?, isLoadingFromData: Bool)
 }
 
 /// clear action, a command to clear the canvas
 public struct ClearAction: CanvasElement {
     public var index: Int = 0
-    public func drawSelf(on target: RenderTarget?) {
+    public func drawSelf(on target: RenderTarget?, isLoadingFromData: Bool) {
         target?.clear()
     }
 }
@@ -55,7 +55,7 @@ open class CanvasData {
         } else {
             finishCurrentElement()
             
-            let lineStrip = LineStrip(lines: lines, brush: brush)
+            let lineStrip = LineStrip(lines: lines, brush: brush, isLoadingFromData: false)
             currentElement = lineStrip
             undoArray.removeAll()
             

@@ -232,9 +232,8 @@ fragment half4 fragment_point_func_original(Point point_data [[ stage_in ]],
 fragment float4 fragment_point_func_without_texture(Point point_data [[ stage_in ]],
                                                     float2 pointCoord  [[ point_coord ]])
 {
-    float dist = length(pointCoord - float2(0.5));
-    if (dist >= 0.5) {
-        return float4(0);
+    if (length(pointCoord - float2(0.5)) > 0.5) {
+        discard_fragment();
     }
     return point_data.color;
 }

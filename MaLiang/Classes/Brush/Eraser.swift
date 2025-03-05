@@ -16,13 +16,13 @@ open class Eraser: Brush {
         attachment.isBlendingEnabled = true
         attachment.alphaBlendOperation = .reverseSubtract
         attachment.rgbBlendOperation = .reverseSubtract
-        attachment.sourceRGBBlendFactor = .zero
+        attachment.sourceRGBBlendFactor = .oneMinusDestinationAlpha
         attachment.sourceAlphaBlendFactor = .one
         attachment.destinationRGBBlendFactor = .oneMinusSourceAlpha
         attachment.destinationAlphaBlendFactor = .one
     }
     
-    override func render(lineStrip: LineStrip, on renderTarget: RenderTarget? = nil) {
+    override func render(lineStrip: LineStrip, on renderTarget: RenderTarget? = nil, isLoadingFromData: Bool) {
         let renderTarget = renderTarget ?? target?.screenTarget
         
         guard lineStrip.lines.count > 0, let target = renderTarget else {
@@ -37,7 +37,7 @@ open class Eraser: Brush {
         
         commandEncoder?.setRenderPipelineState(pipelineState)
         
-        if let vertex_buffer = lineStrip.retrieveBuffers(rotation: rotation) {
+        if let vertex_buffer = lineStrip.retrieveBuffers(rotation: rotation, isLoadingFromData: isLoadingFromData) {
             commandEncoder?.setVertexBuffer(vertex_buffer, offset: 0, index: 0)
             commandEncoder?.setVertexBuffer(target.uniformBuffer, offset: 0, index: 1)
             commandEncoder?.setVertexBuffer(target.transformBuffer, offset: 0, index: 2)
@@ -53,7 +53,7 @@ open class Eraser: Brush {
         
         commandEncoder2?.setRenderPipelineState(pipelineState)
         
-        if let vertex_buffer = lineStrip.retrieveBuffers(rotation: rotation) {
+        if let vertex_buffer = lineStrip.retrieveBuffers(rotation: rotation, isLoadingFromData: false) {
             commandEncoder2?.setVertexBuffer(vertex_buffer, offset: 0, index: 0)
             commandEncoder2?.setVertexBuffer(target.uniformBuffer, offset: 0, index: 1)
             commandEncoder2?.setVertexBuffer(target.transformBuffer, offset: 0, index: 2)

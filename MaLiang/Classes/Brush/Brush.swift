@@ -218,7 +218,7 @@ open class Brush {
     }
 
     /// render a specifyed line strip by this brush
-    internal func render(lineStrip: LineStrip, on renderTarget: RenderTarget? = nil) {
+    internal func render(lineStrip: LineStrip, on renderTarget: RenderTarget? = nil, isLoadingFromData: Bool) {
         
         let renderTarget = renderTarget ?? target?.screenTarget
         
@@ -234,7 +234,7 @@ open class Brush {
         
         commandEncoder?.setRenderPipelineState(pipelineState)
         
-        if let vertex_buffer = lineStrip.retrieveBuffers(rotation: rotation) {
+        if let vertex_buffer = lineStrip.retrieveBuffers(rotation: rotation, isLoadingFromData: isLoadingFromData) {
             commandEncoder?.setVertexBuffer(vertex_buffer, offset: 0, index: 0)
             commandEncoder?.setVertexBuffer(target.uniformBuffer, offset: 0, index: 1)
             commandEncoder?.setVertexBuffer(target.transformBuffer, offset: 0, index: 2)
