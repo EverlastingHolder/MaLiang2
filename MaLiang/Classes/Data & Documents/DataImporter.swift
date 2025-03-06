@@ -17,23 +17,20 @@ open class DataImporter {
     ///   - directory: directory for saved data contents
     ///   - canvas: canvas to draw data on
     /// - Attention: make sure that all brushes needed are finished seting up before reloading data
-    public static func importData(from directory: URL, to canvas: MLCanvas, progress: ProgressHandler? = nil, result: ResultHandler? = nil) {
-        DispatchQueue(label: "com.maliang.importing").async {
-            do {
-                try self.importDataSynchronously(from: directory, to: canvas, progress: progress)
-                DispatchQueue.main.async {
-                    result?(.success(()))
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    result?(.failure(error))
-                }
-            }
+    public static func importData(
+        from directory: URL,
+        to canvas: MLCanvas,
+        progress: ProgressHandler? = nil
+    ) async -> Result<Void, Error>  {
+        do {
+            try await self.importDataSynchronously(from: directory, to: canvas, progress: progress)
+            return .success(())
+        } catch {
+            return .failure(error)
         }
     }
     
-    public static func importDataSynchronously(from directory: URL, to canvas: MLCanvas, progress: ProgressHandler? = nil) throws {
-        
+    public static func importDataSynchronously(from directory: URL, to canvas: MLCanvas, progress: ProgressHandler? = nil) async throws {
         let decoder = JSONDecoder()
         
         /// check infomations
@@ -42,22 +39,21 @@ open class DataImporter {
         guard info.library != nil else {
             throw MLError.fileDamaged
         }
-        reportProgress(0.02, on: progress)
 
         /// read contents
         let contentData = try Data(contentsOf: directory.appendingPathComponent("content"))
         let content = try decoder.decode(CanvasContent.self, from: contentData)
-        reportProgress(0.1, on: progress)
 
         do {
             /// read chartlet textures
-            let texturePaths = try FileManager.default.contentsOfDirectory(at: directory.appendingPathComponent("textures"), includingPropertiesForKeys: [], options: [])
-            reportProgress(0.15, on: progress)
-            for i in 0 ..< texturePaths.count {
-                let path = texturePaths[i]
+            let texturePaths = try FileManager.default.contentsOfDirectory(
+                at: directory.appendingPathComponent("textures"),
+                includingPropertiesForKeys: [],
+                options: []
+            )
+            for path in texturePaths {
                 let data = try Data(contentsOf: path)
-                try canvas.makeTexture(with: data, id: path.lastPathComponent)
-                reportProgress(base: 0.15, unit: i, total: texturePaths.count, on: progress)
+                try await canvas.makeTexture(with: data, id: path.lastPathComponent)
             }
         } catch {
             // no textures found
@@ -68,18 +64,23 @@ open class DataImporter {
         
         /// update content size for scrollable canvas
         if let scrollable = canvas as? ScrollableCanvas, let size = content.size {
-            scrollable.contentSize = size
+            Task { @MainActor in
+                scrollable.contentSize = size
+            }
         }
         
+        let defaultBrush = await canvas.defaultBrush
+        
         /// import elements to canvas
-        content.lineStrips.forEach { $0.brush = canvas.findBrushBy(name: $0.brushName) ?? canvas.defaultBrush }
-        content.chartlets.forEach { $0.canvas = canvas }
-        canvas.data.elements = (content.lineStrips + content.chartlets).sorted(by: { $0.index < $1.index})
-        reportProgress(1, on: progress)
-
-        DispatchQueue.main.async {
-            /// redraw must be call on main thread
-            canvas.redraw(isLoadingFromData: true)
+        for line in content.lineStrips {
+            line.brush = await canvas.findBrushBy(name: line.brushName) ?? defaultBrush
         }
+        
+        content.chartlets.forEach { $0.canvas = canvas }
+        
+        let sortedElements: [CanvasElement] = (content.lineStrips + content.chartlets).sorted(by: { $0.index < $1.index })
+        await canvas.setDataElemnets(sortedElements)
+        /// redraw must be call on main thread
+        await canvas.redraw(isLoadingFromData: true)
     }
 }

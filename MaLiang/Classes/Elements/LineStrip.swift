@@ -88,7 +88,7 @@ open class LineStrip: CanvasElement {
                 renderingColor.alpha = renderingColor.alpha / Float(overlapping) * 2.5
             }
             alpha = renderingColor.alpha
-            print("current alpha: \(renderingColor.alpha), overlapping: \(overlapping), real alpha: \(color.alpha)")
+//            print("current alpha: \(renderingColor.alpha), overlapping: \(overlapping), real alpha: \(color.alpha)")
             
             for index in 0 ..< Int(count) {
                 let index = CGFloat(index)

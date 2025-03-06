@@ -34,6 +34,11 @@ public struct Pan {
     }
 }
 
+/// Может быть отзеркаленым(при этом дублируясь) относительно центра(по вертикали)
+protocol Mirrorable: AnyObject {
+    var isMirrored: Bool { get set }
+}
+
 open class Brush {
     
     // unique identifier for a specifyed brush, should not be changed over all your apps
@@ -52,6 +57,8 @@ open class Brush {
             updateRenderingColor()
         }
     }
+    
+    open var isMirrored: Bool = false
     
     // width of stroke line in points
     open var pointSize: CGFloat = 4
@@ -123,6 +130,7 @@ open class Brush {
         return makeLine(from: from.point, to: to.point, force: forceRate)
     }
     
+    private lazy var baseMirrorX = target?.bounds.width ?? 0
     /// make lines to render with specified begin and end location
     ///
     /// - Parameters:
@@ -132,14 +140,42 @@ open class Brush {
     ///   - uniqueColor: these lines will use current color as unique color if sets to true, defaults to false
     /// - Returns: lines to render
     open func makeLine(from: CGPoint, to: CGPoint, force: CGFloat? = nil, uniqueColor: Bool = false) -> [MLLine] {
-        let force = force ?? forceOnTap
         let scale = scaleWithCanvas ? 1 : canvasScale
-        let line = MLLine(begin: (from + canvasOffset) / canvasScale,
-                          end: (to + canvasOffset) / canvasScale,
-                          pointSize: pointSize * force / scale,
-                          pointStep: pointStep / scale,
-                          color: uniqueColor ? renderingColor : nil)
-        return [line]
+        let effectiveForce = force ?? forceOnTap
+        let scaledPointSize = pointSize * effectiveForce / scale
+        let scaledPointStep = pointStep / scale
+        
+        let baseBegin = calculateScaledPoint(from)
+        let baseEnd = calculateScaledPoint(to)
+        
+        let mainLine = MLLine(
+                begin: baseBegin,
+                end: baseEnd,
+                pointSize: scaledPointSize,
+                pointStep: scaledPointStep,
+                color: uniqueColor ? renderingColor : nil
+        )
+        
+        guard isMirrored, target != nil else {
+            return [mainLine]
+        }
+        
+        let mirroredBegin = CGPoint(x: baseMirrorX - baseBegin.x, y: baseBegin.y)
+        let mirroredEnd = CGPoint(x: baseMirrorX - baseEnd.x, y: baseEnd.y)
+        
+        let mirroredLine = MLLine(
+            begin: mirroredBegin,
+            end: mirroredEnd,
+            pointSize: scaledPointSize,
+            pointStep: scaledPointStep,
+            color: mainLine.color
+        )
+        return [mainLine, mirroredLine]
+    }
+    
+    @inlinable
+    internal func calculateScaledPoint(_ point: CGPoint) -> CGPoint {
+        return (point + canvasOffset) / canvasScale
     }
     
     /// some brush may have cached unfinished lines, return them here
@@ -147,11 +183,11 @@ open class Brush {
         return []
     }
 
-    private var canvasScale: CGFloat {
+    public var canvasScale: CGFloat {
         return target?.screenTarget?.scale ?? 1
     }
     
-    private var canvasOffset: CGPoint {
+    public var canvasOffset: CGPoint {
         return target?.screenTarget?.contentOffset ?? .zero
     }
     
@@ -328,15 +364,4 @@ open class Brush {
     }
 }
 
-// MARK: - Deprecated
-extension Brush {
-    @available(*, deprecated, message: "", renamed: "makeLine(from:to:)")
-    public func pan(from: Pan, to: Pan) -> MLLine {
-        return makeLine(from: from, to: to).first!
-    }
-    
-    @available(*, deprecated, message: "", renamed: "makeLine(from:to:force:)")
-    public func line(from: CGPoint, to: CGPoint, force: CGFloat = 1) -> MLLine {
-        return makeLine(from: from, to: to, force: force).first!
-    }
-}
+extension Brush: Mirrorable {}

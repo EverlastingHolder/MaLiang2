@@ -196,10 +196,19 @@ open class MLCanvas: MetalView {
     
     /// take a snapshot on current canvas and export an image
     open func snapshot(contentScale: CGFloat) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, contentScale)
-        drawHierarchy(in: bounds, afterScreenUpdates: true)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        // Проверяем, что bounds не нулевые
+        guard !bounds.isEmpty else { return nil }
+        
+        // Создаем рендерер с размером view и масштабом экрана
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = contentScale
+        let renderer = UIGraphicsImageRenderer(size: bounds.size, format: format)
+        
+        // Рендерим изображение
+        let image = renderer.image { _ in
+            drawHierarchy(in: bounds, afterScreenUpdates: true)
+        }
+        
         return image
     }
     
@@ -216,7 +225,7 @@ open class MLCanvas: MetalView {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-//        redraw(isLoadingFromData: false)
+        redraw(isLoadingFromData: false)
     }
     
     // MARK: - Document
@@ -235,6 +244,11 @@ open class MLCanvas: MetalView {
             self.redraw(isLoadingFromData: true)
         }
         data.observers.data(oldData, didResetTo: newData)
+    }
+    
+    @MainActor
+    public func setDataElemnets(_ elements: [CanvasElement]) {
+        data.elements = elements
     }
     
     public func undo() {

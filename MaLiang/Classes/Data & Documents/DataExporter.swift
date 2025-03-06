@@ -14,6 +14,7 @@ open class DataExporter {
     // MARK: - Saving
     
     /// create documents from specified canvas
+    @MainActor
     public init(canvas: MLCanvas) {
         let data = canvas.data
         content = CanvasContent(size: canvas.size,
@@ -31,23 +32,19 @@ open class DataExporter {
     ///   - directory: the folder where to place all datas
     /// - Throws: error while saving
     public func save(to directory: URL, identifier: String? = nil,
-                     progress: ProgressHandler? = nil, result: ResultHandler? = nil) {
-        DispatchQueue(label: "com.maliang.saving").async {
-            do {
-                try self.saveSynchronously(to: directory, identifier: identifier, progress: progress)
-                DispatchQueue.main.async {
-                    result?(.success(()))
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    result?(.failure(error))
-                }
-            }
+                     progress: ProgressHandler? = nil) async -> Result<Void, Error> {
+        
+        do {
+            try await self.saveSynchronously(to: directory, identifier: identifier, progress: progress)
+            return .success(())
+        } catch {
+            return .failure(error)
         }
     }
     
+    
     open func saveSynchronously(to directory: URL, identifier: String? = nil,
-                                progress: ProgressHandler?) throws {
+                                progress: ProgressHandler?) async throws {
         /// make sure the directory is empty
         let contents = try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil, options: [])
         guard contents.count <= 0 else {

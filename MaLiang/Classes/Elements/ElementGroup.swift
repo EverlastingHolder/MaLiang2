@@ -27,4 +27,3 @@ open class ElementGroup<E: CanvasElement>: CanvasElement {
         elements.append(element)
     }
 }
-
