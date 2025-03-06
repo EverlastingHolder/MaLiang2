@@ -35,7 +35,7 @@ public struct Pan {
 }
 
 /// Может быть отзеркаленым(при этом дублируясь) относительно центра(по вертикали)
-protocol Mirrorable: AnyObject {
+public protocol Mirrorable: AnyObject {
     var isMirrored: Bool { get set }
 }
 
